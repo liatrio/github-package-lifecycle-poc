@@ -1,0 +1,52 @@
+{
+  "name": "baserrato",
+  "displayName": "",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/baserrato/baserrato",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "pretty": "prettier --write .",
+    "lint": "prettier -c .",
+    "test": "echo 'There are currently no tests available.'",
+    "scan": "snyk monitor && snyk code test"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "baserrato"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/baserrato/baserrato.git"
+  },
+  "author": {
+    "name": "baserrato"
+  },
+  "bugs": {
+    "url": "https://github.com/baserrato/baserrato/issues"
+  },
+  "dependencies": {
+    "@4lch4/logger": "^1.11.0",
+    "@octokit/rest": "^20.0.1",
+    "dotenv": "^16.3.1",
+    "octokit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.4.1",
+    "prettier": "^3.0.0",
+    "tsc-alias": "^1.8.7",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,0 +1,26 @@
+# Directories
+**/.DS_Store
+**/.vercel
+**/site
+**/bin
+**/dist
+**/node_modules
+**/coverage
+**/out
+**/public
+**/tmp
+**/data
+**/.cache
+**/.turbo
+**/.vercel
+**/redis-data
+**/Sample-Data
+
+# Files
+**/.dccache
+**/*.env
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+notes/Blob-Storage.md
+Debug-Log-*.json
