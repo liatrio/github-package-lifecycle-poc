@@ -26,6 +26,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_ORG: ${{ github.repository_owner }}
+          PACKAGE_TYPE: container
+          RETENTION: 365 
         with:
           script: |
             const { default: packageReport } = await import('${{ github.workspace }}/dist/index.js')
