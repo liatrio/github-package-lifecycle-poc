@@ -2,6 +2,7 @@ import { logger } from '@4lch4/logger'
 import { Octokit } from '@octokit/rest'
 import { Docker, Options } from 'docker-cli-js'
 import { fileURLToPath } from 'url'
+import fetch from 'node-fetch'
 import * as path from 'path'
 import fs from 'fs-extra'
 import 'dotenv/config'
@@ -18,7 +19,12 @@ const dockerOptions = new Options(
 
 const docker = new Docker(dockerOptions);
 
-const octokit = new Octokit({ auth: process.env.GH_TOKEN })
+const octokit = new Octokit({ 
+  auth: process.env.GH_TOKEN,
+  request: {
+    fetch: fetch,
+  },
+})
 const MAX_PER_PAGE = 100
 
 async function getOrgPackagesPage (org: string, pageNumber: number, packageType: any) {
