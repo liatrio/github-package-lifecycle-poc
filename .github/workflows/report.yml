@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: '0 5 * * 0'
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   report:
@@ -18,16 +15,24 @@ jobs:
         with:
           node-version: 18
           cache: npm
+      
+      # Required for access to the GitHub Container Registry manifests
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm ci
       - run: npm run build
-
+      
       - uses: actions/github-script@v6
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_ORG: ${{ github.repository_owner }}
           PACKAGE_TYPE: container
-          RETENTION: 3
+          RETENTION: 365
         with:
           script: |
             const { default: packageReport } = await import('${{ github.workspace }}/dist/index.js')
