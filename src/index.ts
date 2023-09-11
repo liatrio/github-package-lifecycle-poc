@@ -140,10 +140,11 @@ async function main () {
 
     for (let i = 0; i < orgPackages.length; i++){
       const packageVersions = await getPackageVersions(org, packageType, orgPackages[i].name)
+      let versionCount = 0
       const packageReport = {
         org: org,
         packageName: orgPackages[i].name,
-        count: packageVersions.length,
+        count: 0,
         version: <{name: string, age: number, size: number, location: string}[]>[],
       }
       switch (packageType) {
@@ -151,6 +152,7 @@ async function main () {
           for (let j = 0; j < packageVersions.length; j++){
             const age = calculateAge(packageVersions[j].updated_at)
             if (age < retentionPeriod) {
+              versionCount++
               const packageTag = packageVersions[j]?.metadata?.container?.tags[0] || packageVersions[j].name
               let registry = ``
               if (packageVersions[j]?.metadata?.container?.tags[0]) registry = `ghcr.io/${org}/${orgPackages[i].name}:${packageVersions[j]?.metadata?.container?.tags[0]}`
@@ -173,7 +175,10 @@ async function main () {
             }
           }
        }
-        allPackages.push(packageReport)
+        if (versionCount > 0) {
+          packageReport.count = versionCount
+          allPackages.push(packageReport)
+        }
     }
     await outputReport(allPackages)
   } catch (error) {
@@ -181,8 +186,18 @@ async function main () {
   }
 }
 
-export default async function packageReport() {
-  main()  
+// export default async function packageReport() {
+//   main()  
+//   .then(() => {
+//     logger.success(`Execution completed successfully!`)
+//   })
+//   .catch(err => {
+//     logger.error(`Error returned from main()`)
+//     logger.error(err)
+//   })
+// }
+
+main()  
   .then(() => {
     logger.success(`Execution completed successfully!`)
   })
@@ -190,4 +205,3 @@ export default async function packageReport() {
     logger.error(`Error returned from main()`)
     logger.error(err)
   })
-}
