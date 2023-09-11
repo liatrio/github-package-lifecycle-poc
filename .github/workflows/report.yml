@@ -21,11 +21,16 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+
+      - uses: actions/github-script@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_ORG: ${{ github.repository_owner }}
+        with:
+          script: |
+            const script = require('./dist/index.js')
+            console.log(script({github, context}))
 
-      
       # - name: Set current date as env variable
       #   run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
   
