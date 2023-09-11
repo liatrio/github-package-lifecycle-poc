@@ -1,5 +1,8 @@
 name: Github Package Report
 
+on:
+  workflow_dispatch:
+
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -17,15 +20,15 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GH_TOKEN }}
 
       - run: npm ci
       - run: npm run build
       
       - uses: actions/github-script@v6
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_ORG: ${{ github.repository_owner }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_ORG: ${{ secrets.GH_ORG }}
           PACKAGE_TYPE: container
           RETENTION: 365
         with:
