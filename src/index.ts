@@ -175,7 +175,8 @@ async function main () {
   }
 }
 
-main()  
+export default async function packageReport() {
+  main()  
   .then(() => {
     logger.success(`Execution completed successfully!`)
   })
@@ -183,3 +184,4 @@ main()
     logger.error(`Error returned from main()`)
     logger.error(err)
   })
+}

@@ -28,8 +28,8 @@ jobs:
           GH_ORG: ${{ github.repository_owner }}
         with:
           script: |
-            const script = require('./dist/index.js')
-            console.log(script({github, context}))
+            const { default: packageReport } = await import('${{ github.workspace }}/dist/index.js')
+            await packageReport()
 
       # - name: Set current date as env variable
       #   run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
