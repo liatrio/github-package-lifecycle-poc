@@ -132,7 +132,7 @@ async function outputReport(report: any[]) {
 
 async function main () {
   const org =  process.env.GH_ORG || ''
-  const packageType = process.env.PACKAGE_TYPE
+  const packageType = process.env.PACKAGE_TYPE || 'container'
   const retentionPeriod = Number(process.env.RETENTION) || 90
   const allPackages = []
   try {
@@ -150,7 +150,7 @@ async function main () {
         case 'container':
           for (let j = 0; j < packageVersions.length; j++){
             const age = calculateAge(packageVersions[j].updated_at)
-            if (age > retentionPeriod) {
+            if (age < retentionPeriod) {
               const packageTag = packageVersions[j]?.metadata?.container?.tags[0] || packageVersions[j].name
               let registry = ``
               if (packageVersions[j]?.metadata?.container?.tags[0]) registry = `ghcr.io/${org}/${orgPackages[i].name}:${packageVersions[j]?.metadata?.container?.tags[0]}`

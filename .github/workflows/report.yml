@@ -27,19 +27,19 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_ORG: ${{ github.repository_owner }}
           PACKAGE_TYPE: container
-          RETENTION: 365 
+          RETENTION: 3
         with:
           script: |
             const { default: packageReport } = await import('${{ github.workspace }}/dist/index.js')
             await packageReport()
 
-      # - name: Set current date as env variable
-      #   run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+      - name: Set current date as env variable
+        run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
   
-      # - uses: actions/upload-artifact@v3
-      #   env:
-      #     TIMESTAMP: ${{ env.TIMESTAMP }}
-      #   with:
-      #     name: Results-Output-${{ env.TIMESTAMP }}
-      #     path: output/*
-      #     retention-days: 3
+      - uses: actions/upload-artifact@v3
+        env:
+          TIMESTAMP: ${{ env.TIMESTAMP }}
+        with:
+          name: Results-Output-${{ env.TIMESTAMP }}
+          path: out/*
+          retention-days: 3
