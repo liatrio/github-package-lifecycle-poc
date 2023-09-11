@@ -114,11 +114,11 @@ async function outputReport(report: any[]) {
 
     const timestamp = new Date().toISOString().replace(/:/g, '-')
 
-    const jsonFilePath = path.join(__dirname, '..' ,'out', `report-${timestamp}.json`)
+    const jsonFilePath = path.join(__dirname,`..` , `out`, `report-${timestamp}.json`)
 
     logger.debug(`[outputReport]: Writing report to ${jsonFilePath}...`)
 
-    await fs.ensureDir(path.join(__dirname, 'out'))
+    await fs.ensureDir(path.join(__dirname, '..', 'out'))
     await fs.writeJson(jsonFilePath, report, { spaces: 2 })
 
     console.table(report)
