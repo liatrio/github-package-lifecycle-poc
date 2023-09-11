@@ -1,0 +1,38 @@
+name: Github Package Report
+
+on:
+  schedule:
+    - cron: '0 5 * * 0'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_ORG: ${{ github.repository_owner }}
+
+      
+      # - name: Set current date as env variable
+      #   run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+  
+      # - uses: actions/upload-artifact@v3
+      #   env:
+      #     TIMESTAMP: ${{ env.TIMESTAMP }}
+      #   with:
+      #     name: Results-Output-${{ env.TIMESTAMP }}
+      #     path: output/*
+      #     retention-days: 3
