@@ -36,6 +36,8 @@ jobs:
             const { default: packageReport } = await import('${{ github.workspace }}/dist/index.js')
             await packageReport()
 
+      - run: pwd
+      - run: tree -a
       - run: ls -la
 
       - name: Set current date as env variable
