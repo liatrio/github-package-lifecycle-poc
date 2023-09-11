@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/github-script@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_ORG: ${{ github.repository_owner }}
         with:
           script: |
