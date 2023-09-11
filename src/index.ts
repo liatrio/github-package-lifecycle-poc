@@ -151,7 +151,7 @@ async function main () {
         case 'container':
           for (let j = 0; j < packageVersions.length; j++){
             const age = calculateAge(packageVersions[j].updated_at)
-            if (age < retentionPeriod) {
+            if (age > retentionPeriod) {
               versionCount++
               const packageTag = packageVersions[j]?.metadata?.container?.tags[0] || packageVersions[j].name
               let registry = ``
